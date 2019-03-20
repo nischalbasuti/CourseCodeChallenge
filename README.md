@@ -17,7 +17,9 @@ nothing (yet).
 ```bundle exec rake db:create```
 
 ## Database initialization
+```bundle exec rake db:create```
 ```bundle exec rake db:migrate```
+```bundle exec rake db:seed```
 
 ## How to run the test suite
 
