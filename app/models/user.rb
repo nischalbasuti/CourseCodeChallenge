@@ -5,6 +5,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :role
 
+  def email_required?
+    false
+  end
+
+  def email_changed?
+    false
+  end
+
   def to_s
     {
       :id           => self.id,
