@@ -46,6 +46,17 @@ class User < ApplicationRecord
     self.role.name == "other"
   end
 
+  def instructor_of?(course)
+    if not self.instructor?
+      return false
+    end
+
+    if course.instructor.user.id == self.id
+      return true
+    end
+    false
+  end
+
   # email_required? and will_save_change_to_email? need to be defined when using
   # the validatable module.
   # https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-with-something-other-than-their-email-address
