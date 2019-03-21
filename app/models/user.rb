@@ -5,7 +5,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :role
 
-  validate :validate_fields
+  validate :validate_fields, :check_username_exists
+
+  def check_username_exists
+    if User.where(username: self.username).count >= 1
+      errors.add(:user, "username #{self.username} already exists")
+    end
+  end
 
   def validate_fields
 
