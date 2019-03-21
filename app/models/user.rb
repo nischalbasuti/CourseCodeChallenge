@@ -4,8 +4,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :role
+  belongs_to :subscriber
 
-  validate :validate_fields
+  validate :validate_fields, :check_username_exists
+
+  def check_username_exists
+    if User.where(username: self.username).count >= 1
+      errors.add(:user, "username #{self.username} already exists")
+    end
+  end
 
   def validate_fields
 
@@ -44,6 +51,17 @@ class User < ApplicationRecord
       return nil
     end
     self.role.name == "other"
+  end
+
+  def instructor_of?(course)
+    if not self.instructor?
+      return false
+    end
+
+    if course.instructor.user.id == self.id
+      return true
+    end
+    false
   end
 
   # email_required? and will_save_change_to_email? need to be defined when using
