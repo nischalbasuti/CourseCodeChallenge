@@ -3,23 +3,23 @@ class GroupPolicy <  ApplicationPolicy
 
   def initialize(user, record)
     @user = user
-    @group = record
+    @user_other = record
   end
 
   def index?
-    true
+    @user.instructor?
   end
 
   def show?
-    true
+    @user.instructor? or @user == @user_other
   end
 
   def create?
-    @user.instructor?
+    true
   end
 
   def update?
-    @user.instructor?
+    @user.instructor? or @user == @user_other
   end
 
   def destroy?

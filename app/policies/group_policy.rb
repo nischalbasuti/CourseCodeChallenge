@@ -11,19 +11,20 @@ class GroupPolicy <  ApplicationPolicy
   end
 
   def show?
-    true
+    @user.instructor_of? @group.course or
+      Subscriber.where(user: @user, group: @group, course: @group.course).count >=1
   end
 
   def create?
-    @user.instructor?
+    @user.instructor_of? @group.course
   end
 
   def update?
-    @user.instructor?
+    @user.instructor_of? @group.course
   end
 
   def destroy?
-    @user.instructor?
+    @user.instructor_of? @group.course
   end
 
   class Scope
