@@ -59,7 +59,9 @@ class User < ApplicationRecord
   def to_s
     {
       :id           => self.id,
-      :username        => self.username,
+      :username     => self.username,
+      :first_name   => self.first_name,
+      :last_name    => self.last_name,
       :role         => self.role.name,
       :institute_id => self.instituteid,
     }.to_s
