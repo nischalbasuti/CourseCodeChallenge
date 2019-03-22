@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :role
-  belongs_to :subscriber
+  has_many :subscribers
+  has_many :courses, through: :subscribers
 
   validate :validate_fields, :check_username_exists
 
