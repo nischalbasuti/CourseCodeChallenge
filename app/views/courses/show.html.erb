@@ -2,7 +2,7 @@
 
 <p>
   <strong>Instructor:</strong>
-  <%= @course.instructor %>
+  <%= @course.instructor.user.username %>
 </p>
 
 <p>
@@ -16,8 +16,13 @@
   <%= link_to 'Back', courses_path %>
 <% end %>
 
+<br> 
+
 <% if @course.subscribed?(current_user) %>
   <%= link_to "Exit!", unsubscribe_course_path(@course), method: :delete %> <br>
 <% else %>
   <%= link_to "Join!", subscribe_course_path(@course), method: :post %> <br>
 <% end %>
+
+<%= link_to "Groups", groups_course_path(@course), method: :get %> <br>
+

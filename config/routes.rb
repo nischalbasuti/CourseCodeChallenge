@@ -1,12 +1,24 @@
 Rails.application.routes.draw do
   get 'home/index'
-  resources :groups
+  resources :groups do 
+    member do 
+      get 'add_subscribers'
+      put 'add_subscriber'
+      delete 'remove_subscriber'
+    end
+  end
+
   resources :courses do
     member do
       post 'subscribe'
       delete 'unsubscribe'
+      get 'groups'
+      get 'new_group'
+      post 'create_group'
+      get 'subscribers'
     end
   end
+
   devise_for :users, controllers: {
             registrations: 'users/registrations'
   }

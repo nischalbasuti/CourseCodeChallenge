@@ -1,0 +1,34 @@
+<h1>New Group</h1>
+
+<%= form_with(model: @group, local: true, url: create_group_course_path(@course)) do |form| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+      <ul>
+      <% @group.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  course id: <%= @course.id %> <br>
+  course name: <%= @course %> <br>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :project_topic %>
+    <%= form.text_field :project_topic %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', groups_course_path(@course) %>
