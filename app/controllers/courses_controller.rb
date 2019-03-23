@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy,
+                                    :subscribe, :unsubscribe]
   before_action :authenticate_user!, except: []
 
   # GET /courses
@@ -68,6 +69,22 @@ class CoursesController < ApplicationController
       format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # POST /courses/:id/subscribe
+  def subscribe
+    @course.subscribe current_user
+    if @course.save
+      flash[:alert] = "Successfully subscribed!"
+      redirect_to @course
+    end
+  end
+
+  # DELETE /courses/:id/unsubscribe
+  def unsubscribe
+    @course.unsubscribe current_user
+    flash[:alert] = "Successfully unsubscribed!"
+    redirect_to @course
   end
 
   private

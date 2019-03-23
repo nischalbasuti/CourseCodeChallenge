@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   get 'home/index'
   resources :groups
-  resources :courses
+  resources :courses do
+    member do
+      post 'subscribe'
+      delete 'unsubscribe'
+    end
+  end
   devise_for :users, controllers: {
             registrations: 'users/registrations'
   }

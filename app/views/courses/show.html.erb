@@ -10,5 +10,14 @@
   <%= @course.name %>
 </p>
 
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+
+<% if @course.instructor? current_user %>
+  <%= link_to 'Edit', edit_course_path(@course) %> |
+  <%= link_to 'Back', courses_path %>
+<% end %>
+
+<% if @course.subscribed?(current_user) %>
+  <%= link_to "Exit!", unsubscribe_course_path(@course), method: :delete %> <br>
+<% else %>
+  <%= link_to "Join!", subscribe_course_path(@course), method: :post %> <br>
+<% end %>
