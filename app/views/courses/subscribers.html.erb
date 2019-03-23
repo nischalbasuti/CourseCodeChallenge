@@ -1,0 +1,25 @@
+Course: <%= @course.name %> <br>
+Subscribers:<br>
+<table class="table table-hover">
+  <tr>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Group</th>
+  </tr>
+  <tr>
+    <% for subscriber in @course.subscribers %>
+      <td>
+        <%= subscriber.user.username %>
+      </td>
+      <td>
+        <%= subscriber.user.role.name %>
+      </td>
+      <td>
+        <%= subscriber.group %>
+      </td>
+      <td>
+        <%= link_to "update", "/group/1/update_group", class: 'btn btn-success' %>
+      </td>
+    </tr>
+  <% end %>
+</table>

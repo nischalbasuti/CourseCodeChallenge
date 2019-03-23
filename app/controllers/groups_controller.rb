@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:show, :edit, :update, :destroy,
+                                   :add_subscribers, :add_subscriber, :remove_subscriber]
   before_action :authenticate_user!, except: []
 
   # GET /groups
@@ -65,6 +66,56 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /groups/:id/add_subscriber
+  def add_subscribers
+    authorize @group, :edit?
+
+    @course = @group.course
+
+    # Subscribers of this course who are students and are not in this group.
+    @student_subscribers = @course.subscribers
+                          .where("group_id !=? or group_id is null", @group.id)
+                          .includes(:user).where(users: {role: Role.find(1)})
+  end
+
+  # PUT /groups/:id/add_subscriber
+  def add_subscriber
+    authorize @group, :create?
+
+    subscriber = Subscriber.find(params[:subscriber_id])
+    subscriber.group = @group
+
+    if not subscriber.user.student?
+      flash[:error] = "Only students can be added to a group!"
+      redirect_to add_subscribers_group_path(@group)
+      return
+    end
+
+    if subscriber.save
+      flash[:alert] = "Successfully added #{subscriber.user.username} to group!"
+      redirect_to add_subscribers_group_path(@group)
+    else
+      flash[:error] = "Failed to add to #{subscriber.user.username} group!"
+      redirect_to add_subscribers_group_path(@group)
+    end
+  end
+
+  # DELETE /groups/:id/remove_subscriber
+  def remove_subscriber
+    authorize @group, :create?
+
+    subscriber = Subscriber.find(params[:subscriber_id])
+    subscriber.group = nil
+
+    if subscriber.save
+      flash[:alert] = "Successfully removed #{subscriber.user.username} from group!"
+      redirect_to @group
+    else
+      flash[:error] = "Failed to remove #{subscriber.user.username} from group!"
+      redirect_to @group
     end
   end
 

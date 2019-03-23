@@ -2,11 +2,16 @@
 
 <p>
   <strong>Course:</strong>
-  <%= @group.course %>
+  <%= link_to @group.course, @group.course %>
 </p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Group ID:</strong>
+  <%= @group.id %>
+</p>
+
+<p>
+  <strong>Group name:</strong>
   <%= @group.name %>
 </p>
 
@@ -21,4 +26,37 @@
 </p>
 
 <%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<%= link_to 'Back', groups_course_path(@group.course) %>
+
+<br>
+
+<table class="table table-hover">
+  <tr>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Group</th>
+  </tr>
+  <%# Loop through subscribers who are part of this group %>
+  <% for subscriber in @group.subscribers %>
+    <tr>
+      <td>
+        <%= subscriber.user.username %>
+      </td>
+      <td>
+        <%= subscriber.user.role.name %>
+      </td>
+      <td>
+        <% if subscriber.group.nil? %>
+          ------
+        <% else %>
+          <%= link_to subscriber.group.name, subscriber.group %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to "Remove from group", remove_subscriber_group_path(@group, :subscriber_id => subscriber.id),
+          class: 'btn btn-danger', method:"delete" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to "Add students to group.", add_subscribers_group_path(@group), class: 'btn btn-success' %>
