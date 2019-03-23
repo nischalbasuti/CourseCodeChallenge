@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     member do
       post 'subscribe'
       delete 'unsubscribe'
+      get 'groups'
+      get 'new_group'
+      post 'create_group'
     end
   end
   devise_for :users, controllers: {

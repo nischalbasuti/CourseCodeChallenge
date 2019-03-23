@@ -2,10 +2,11 @@
 
 <h1>Groups</h1>
 
+<strong>Course: <%= @course %></strong>
+
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Course</th>
       <th>Name</th>
       <th>Grade</th>
       <th>Project url</th>
@@ -16,10 +17,9 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td><%= group.course %></td>
         <td><%= group.name %></td>
         <td><%= group.grade %></td>
-        <td><%= group.project_url %></td>
+        <td><%= link_to group.project_topic, group.project_url %></td>
         <td><%= link_to 'Show', group %></td>
         <td><%= link_to 'Edit', edit_group_path(group) %></td>
         <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Group', new_group_path %>
+<%= link_to 'New Group', new_group_course_path(@course) %>

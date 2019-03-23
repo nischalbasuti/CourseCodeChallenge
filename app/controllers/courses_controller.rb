@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy,
-                                    :subscribe, :unsubscribe]
+                                    :subscribe, :unsubscribe,
+                                    :groups, :new_group, :create_group]
   before_action :authenticate_user!, except: []
 
   # GET /courses
@@ -87,6 +88,35 @@ class CoursesController < ApplicationController
     redirect_to @course
   end
 
+  # GET /courses/:id/groups
+  def groups
+    @groups = @course.groups
+  end
+
+  # GET /courses/:id/groups/new
+  def new_group
+    @group = Group.new(course: @course)
+    authorize @group, :new?
+  end
+
+  # POST /courses/:id/groups
+  def create_group
+    group = Group.new(course: @course,
+                      name: params[:group][:name],
+                      project_topic: params[:group][:project_topic])
+    authorize group, :create?
+
+    if group.save
+      flash[:alert] = "Successfully created group!"
+      redirect_to group
+      return
+    else
+      flash[:error] = "Failed created group!"
+      redirect_to new_group_course_path(@course)
+      return
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
@@ -96,5 +126,9 @@ class CoursesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:instructor_id, :name)
+    end
+ 
+    def group_params
+      params.require(:group).permit(:course_id, :name, :grade, :project_url)
     end
 end

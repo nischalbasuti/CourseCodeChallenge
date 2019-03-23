@@ -24,7 +24,6 @@ class GroupsController < ApplicationController
   def edit
     authorize @group
   end
-  end
 
   # POST /groups
   # POST /groups.json
