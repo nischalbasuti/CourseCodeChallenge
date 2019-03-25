@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Number of Students</th>
       <th>Grade</th>
       <th>Project url</th>
       <th colspan="3"></th>
@@ -18,6 +19,7 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= group.name %></td>
+        <td><%= group.subscribers.includes(:user).where(users: {role: Role.first}).count %></td>
         <td><%= group.grade %></td>
         <td><%= link_to group.project_topic, group.project_url %></td>
         <td><%= link_to 'Show', group %></td>
