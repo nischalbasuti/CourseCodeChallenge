@@ -1,7 +1,8 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy,
                                     :subscribe, :unsubscribe,
-                                    :groups, :new_group, :create_group]
+                                    :groups, :new_group, :create_group,
+                                    :subscribers]
   before_action :authenticate_user!, except: []
 
   # GET /courses
@@ -115,6 +116,14 @@ class CoursesController < ApplicationController
       redirect_to new_group_course_path(@course)
       return
     end
+  end
+
+
+  # GET /courses/:id/subscribers
+  def subscribers
+    authorize @course, :create?
+    @student_subscribers = @course.subscribers
+                          .includes(:user).where(users: {role: Role.find(1)})
   end
 
   private

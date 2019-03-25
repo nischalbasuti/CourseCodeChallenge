@@ -27,7 +27,9 @@
 <br>
 
 <% if current_user.instructor? %>
-  <%= link_to "Groups", groups_course_path(@course), method: :get, class: 'btn btn btn-primary' %> <br>
+  <%= link_to "Groups", groups_course_path(@course), method: :get, class: 'btn btn btn-primary' %>
+
+  <%= link_to "Subscribers", subscribers_course_path(@course), method: :get, class: 'btn btn btn-primary' %> <br>
 <% end %>
 
 <% if current_user.student? %>
