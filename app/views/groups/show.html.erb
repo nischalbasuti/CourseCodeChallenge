@@ -13,6 +13,9 @@
 <p>
   <strong>Group name:</strong>
   <%= @group.name %>
+<% if @group.has_user? current_user %>
+  - <%= link_to 'Rename', edit_name_group_path(@group) %>
+<% end %>
 </p>
 
 <p>
@@ -35,8 +38,6 @@
 <% if current_user.instructor? %>
   <%= link_to "Assign Project", edit_project_topic_group_path(@group), class: 'btn btn-primary' %>
   <%= link_to 'Edit', edit_group_path(@group) %> |
-<% elsif current_user.student? %>
-  <%= link_to 'Rename', edit_name_group_path(@group) %> |
 <% end %>
 <%= link_to 'Back', groups_course_path(@group.course) %>
 
@@ -69,5 +70,5 @@
 </table>
 
 <% if current_user.instructor? %>
-  <%= link_to "Add students to group.", add_subscribers_group_path(@group), class: 'btn btn-success' %>
+  <%= link_to "Add Subscribers to Group.", add_subscribers_group_path(@group), class: 'btn btn-success' %>
 <% end %>

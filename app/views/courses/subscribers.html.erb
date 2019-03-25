@@ -6,19 +6,18 @@
 </p>
 
 <hr>
-<%= params %><br></br>
 <strong>Students:</strong>
 
 <%= form_tag(subscribers_course_path(@course), class: 'form', method: 'get') do %>
 
   <span class="field">
     <%= label_tag :name %>
-    <%= text_field_tag :name %>
+    <%= text_field_tag :name, params[:name] %>
   </span>
 
   <span class="field">
     <%= label_tag :student_id, "Student ID" %>
-    <%= text_field_tag :student_id %>
+    <%= text_field_tag :student_id, params[:student_id] %>
   </span>
 
   <span class="field">
@@ -53,7 +52,11 @@
         <%= subscriber.user.last_name %>
       </td>
       <td>
-        <%= subscriber.user.instituteid %>
+        <% if subscriber.user.student? %>
+          <%= subscriber.user.instituteid %>
+        <% else %>
+          Not a student - <%= subscriber.user.role.name %>
+        <% end %>
       </td>
       <td>
         <%= link_to subscriber.group.name, subscriber.group %>

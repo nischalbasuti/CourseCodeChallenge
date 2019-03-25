@@ -137,7 +137,6 @@ class GroupsController < ApplicationController
     # Subscribers of this course who are students and are not in this group.
     @student_subscribers = @course.subscribers
                           .where("group_id !=? or group_id is null", @group.id)
-                          .includes(:user).where(users: {role: Role.find(1)})
   end
 
   # PUT /groups/:id/add_subscriber
@@ -146,12 +145,6 @@ class GroupsController < ApplicationController
 
     subscriber = Subscriber.find(params[:subscriber_id])
     subscriber.group = @group
-
-    if not subscriber.user.student?
-      flash[:error] = "Only students can be added to a group!"
-      redirect_to add_subscribers_group_path(@group)
-      return
-    end
 
     if subscriber.save
       flash[:alert] = "Successfully added #{subscriber.user.username} to group!"
