@@ -26,6 +26,7 @@
 </p>
 
 <% if current_user.instructor? %>
+  <%= link_to "Assign Project", edit_project_topic_group_path(@group), class: 'btn btn-primary' %>
   <%= link_to 'Edit', edit_group_path(@group) %> |
 <% elsif current_user.student? %>
   <%= link_to 'Rename', edit_name_group_path(@group) %> |
