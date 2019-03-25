@@ -1,7 +1,8 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy,
                                    :add_subscribers, :add_subscriber,
-                                   :remove_subscriber, :edit_name, :update_name]
+                                   :remove_subscriber, :edit_name, :update_name,
+                                   :edit_project_topic, :update_project_topic]
   before_action :authenticate_user!, except: []
 
   # GET /groups
@@ -46,6 +47,24 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/edit_name
   def edit_name
+  end
+
+  # GET /groups/1/edit_project_topic
+  def edit_project_topic
+    authorize @group, :create?
+  end
+
+  def update_project_topic
+    authorize @group, :create?
+
+    @group.project_topic = params[:group][:project_topic]
+
+    if @group.save
+      flash[:alert] = "Successfully updated project topic."
+    else
+      flash[:error] = "Failed to update the project topic."
+    end
+    redirect_to @group
   end
 
   # POST /groups

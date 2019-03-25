@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       delete 'remove_subscriber'
       put 'update_name'
       get 'edit_name'
+      get 'edit_project_topic'
+      put 'update_project_topic'
     end
   end
 
