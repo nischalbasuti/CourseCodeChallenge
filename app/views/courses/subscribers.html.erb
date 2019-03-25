@@ -1,25 +1,64 @@
-Course: <%= @course.name %> <br>
-Subscribers:<br>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Course:</strong>
+  <%= link_to @course, @course %>
+</p>
+
+<hr>
+<%= params %><br></br>
+<strong>Students:</strong>
+
+<%= form_tag(subscribers_course_path(@course), class: 'form', method: 'get') do %>
+
+  <span class="field">
+    <%= label_tag :name %>
+    <%= text_field_tag :name %>
+  </span>
+
+  <span class="field">
+    <%= label_tag :student_id, "Student ID" %>
+    <%= text_field_tag :student_id %>
+  </span>
+
+  <span class="field">
+    <%= label_tag :group_id %>
+    <%# <%= text_field_tag :group %1> %>
+    <%= collection_select :course, :group_ids, @course.groups, :id, :name, :include_blank => 'Select Group', :selected => "" %>
+  </span>
+
+  <span class="actions">
+    <%= submit_tag "filter" %>
+  </span>
+  
+<% end %>
+
+<%= link_to "remove filters", subscribers_course_path(@course) %>
+
 <table class="table table-hover">
   <tr>
     <th>Username</th>
-    <th>Role</th>
+    <th>Name</th>
+    <th>Student ID</th>
     <th>Group</th>
   </tr>
-  <tr>
-    <% for subscriber in @course.subscribers %>
+  <%# Loop through subscribers who are part of this group %>
+  <% for subscriber in @filtered_subscribers %>
+    <tr>
       <td>
         <%= subscriber.user.username %>
       </td>
       <td>
-        <%= subscriber.user.role.name %>
+        <%= subscriber.user.first_name %>
+        <%= subscriber.user.last_name %>
       </td>
       <td>
-        <%= subscriber.group %>
+        <%= subscriber.user.instituteid %>
       </td>
       <td>
-        <%= link_to "update", "/group/1/update_group", class: 'btn btn-success' %>
+        <%= link_to subscriber.group.name, subscriber.group %>
       </td>
     </tr>
   <% end %>
 </table>
+
