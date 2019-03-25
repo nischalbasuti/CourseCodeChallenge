@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       get 'edit_name'
       get 'edit_project_topic'
       put 'update_project_topic'
+      get 'edit_grade'
+      put 'update_grade'
     end
   end
 

@@ -1,8 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy,
-                                   :add_subscribers, :add_subscriber,
-                                   :remove_subscriber, :edit_name, :update_name,
-                                   :edit_project_topic, :update_project_topic]
+  before_action :set_group, except: [:index, :create, :new]
   before_action :authenticate_user!, except: []
 
   # GET /groups
@@ -54,6 +51,7 @@ class GroupsController < ApplicationController
     authorize @group, :create?
   end
 
+  # PUT /groups/1/update_project_topic
   def update_project_topic
     authorize @group, :create?
 
@@ -63,6 +61,26 @@ class GroupsController < ApplicationController
       flash[:alert] = "Successfully updated project topic."
     else
       flash[:error] = "Failed to update the project topic."
+    end
+    redirect_to @group
+  end
+
+  # GET /groups/1/edit_grade
+  def edit_grade
+  end
+
+  # PUT /groups/1/update_grade
+  def update_grade
+    # TODO before_action set_group not working, find out why.
+    @grade = Group.find(params[:id]) # Temporary fix for before_action problem.
+    authorize @grade, :create?
+
+    @group.grade = params[:group][:grade]
+
+    if @group.save
+      flash[:alert] = "Successfully updated grade."
+    else
+      flash[:error] = "Failed to update grade."
     end
     redirect_to @group
   end
