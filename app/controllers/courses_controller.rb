@@ -124,6 +124,24 @@ class CoursesController < ApplicationController
     authorize @course, :create?
     @student_subscribers = @course.subscribers
                           .includes(:user).where(users: {role: Role.find(1)})
+
+    @filtered_subscribers = @student_subscribers
+    if not params[:name].nil?
+      name = params[:name].downcase 
+      @filtered_subscribers = @filtered_subscribers
+        .where("LOWER(first_name) like ? OR LOWER(last_name) like ?", "%#{name}%", "%#{name}%")
+    end
+
+    if not params[:student_id].nil?
+      student_id = params[:student_id].downcase
+      @filtered_subscribers = @filtered_subscribers
+        .where("LOWER(instituteid) like ?", "%#{student_id}%")
+    end
+
+    if not params[:course][:group_ids].blank?
+      group_id = params[:course][:group_ids]
+      @filtered_subscribers = @filtered_subscribers .where(group_id: group_id)
+    end
   end
 
   private
