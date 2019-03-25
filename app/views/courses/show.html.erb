@@ -19,10 +19,19 @@
 <br> 
 
 <% if @course.subscribed?(current_user) %>
-  <%= link_to "Exit!", unsubscribe_course_path(@course), method: :delete %> <br>
+  <%= link_to "Exit!", unsubscribe_course_path(@course), method: :delete, class: 'btn btn-danger' %> <br>
 <% else %>
-  <%= link_to "Join!", subscribe_course_path(@course), method: :post %> <br>
+  <%= link_to "Join!", subscribe_course_path(@course), method: :post, class: 'btn btn-success' %> <br>
 <% end %>
 
-<%= link_to "Groups", groups_course_path(@course), method: :get %> <br>
+<br>
+
+<% if current_user.instructor? %>
+  <%= link_to "Groups", groups_course_path(@course), method: :get, class: 'btn btn btn-primary' %> <br>
+<% end %>
+
+<% if current_user.student? %>
+  <? group = @course.subscribers.where(user: current_user).first.group ?>
+  <%= link_to "Your Group", group_url, method: :get, class: 'btn btn btn-primary' %> <br>
+<% end %>
 

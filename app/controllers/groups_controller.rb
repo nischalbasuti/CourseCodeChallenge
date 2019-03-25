@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy,
-                                   :add_subscribers, :add_subscriber, :remove_subscriber]
+                                   :add_subscribers, :add_subscriber,
+                                   :remove_subscriber, :edit_name, :update_name]
   before_action :authenticate_user!, except: []
 
   # GET /groups
@@ -24,6 +25,27 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     authorize @group
+  end
+
+  # PUT /groups/1/update_name
+  def update_name
+    if @group.has_user? current_user
+      @group.name = params[:group][:name]
+
+      if @group.save
+        flash[:alert] = "Successfully updated name of group to #{params[:name]}."
+      else
+        flash[:error] = "Failed to update the name of the group."
+      end
+      redirect_to @group
+    else
+      flash[:error] = "You must be a member of the group to update it's name."
+      redirect_to @group
+    end
+  end
+
+  # GET /groups/1/edit_name
+  def edit_name
   end
 
   # POST /groups

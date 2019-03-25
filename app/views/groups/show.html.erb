@@ -25,16 +25,21 @@
   <%= @group.project_topic %>
 </p>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
+<% if current_user.instructor? %>
+  <%= link_to 'Edit', edit_group_path(@group) %> |
+<% elsif current_user.student? %>
+  <%= link_to 'Rename', edit_name_group_path(@group) %> |
+<% end %>
 <%= link_to 'Back', groups_course_path(@group.course) %>
 
 <br>
 
+<hr>
+<strong>Group members:</strong>
 <table class="table table-hover">
   <tr>
     <th>Username</th>
     <th>Role</th>
-    <th>Group</th>
   </tr>
   <%# Loop through subscribers who are part of this group %>
   <% for subscriber in @group.subscribers %>
@@ -45,18 +50,16 @@
       <td>
         <%= subscriber.user.role.name %>
       </td>
-      <td>
-        <% if subscriber.group.nil? %>
-          ------
-        <% else %>
-          <%= link_to subscriber.group.name, subscriber.group %>
-        <% end %>
-      </td>
-      <td>
-        <%= link_to "Remove from group", remove_subscriber_group_path(@group, :subscriber_id => subscriber.id),
-          class: 'btn btn-danger', method:"delete" %>
-      </td>
+      <% if current_user.instructor? %>
+        <td>
+          <%= link_to "Remove from group", remove_subscriber_group_path(@group, :subscriber_id => subscriber.id),
+            class: 'btn btn-danger', method:"delete" %>
+        </td>
+      <% end %>
     </tr>
   <% end %>
 </table>
-<%= link_to "Add students to group.", add_subscribers_group_path(@group), class: 'btn btn-success' %>
+
+<% if current_user.instructor? %>
+  <%= link_to "Add students to group.", add_subscribers_group_path(@group), class: 'btn btn-success' %>
+<% end %>
