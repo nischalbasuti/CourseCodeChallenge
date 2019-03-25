@@ -17,7 +17,14 @@
 
 <p>
   <strong>Grade:</strong>
-  <%= @group.grade %>
+  <% if @group.grade.nil? %>
+    ungraded
+  <% else %>
+    <%= @group.grade %>
+  <% end %>
+  <% if current_user.instructor? %>
+    - <%= link_to "Change grade", edit_grade_group_path(@group) %>
+  <% end %>
 </p>
 
 <p>
