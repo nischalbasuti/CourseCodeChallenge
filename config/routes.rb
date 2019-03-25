@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       get 'add_subscribers'
       put 'add_subscriber'
       delete 'remove_subscriber'
+      put 'update_name'
+      get 'edit_name'
     end
   end
 
