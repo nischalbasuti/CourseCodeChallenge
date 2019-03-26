@@ -59,7 +59,11 @@
         <% end %>
       </td>
       <td>
-        <%= link_to subscriber.group.name, subscriber.group %>
+        <% if subscriber.group.nil? %>
+          *group not assigned*
+        <% else %>
+          <%= link_to subscriber.group.name, subscriber.group %>
+        <% end %>
       </td>
     </tr>
   <% end %>
