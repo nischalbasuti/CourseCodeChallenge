@@ -7,7 +7,8 @@ class User < ApplicationRecord
   has_many :subscribers
   has_many :courses, through: :subscribers
 
-  validate :validate_fields, :check_username_exists
+  validate :validate_fields
+  before_create :check_username_exists
 
   def check_username_exists
     if User.where(username: self.username).count >= 1

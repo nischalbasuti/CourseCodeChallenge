@@ -1,0 +1,7 @@
+<h1>Editing User: <%= link_to @user.username, @user %> </h1>
+<%= link_to 'Back', users_path %>
+
+<hr>
+<%= render 'update_form', user: @user %>
+
+
