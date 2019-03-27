@@ -19,14 +19,15 @@
           <a class="nav-link" href="<%= url_for (:back) %>">Back</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/courses">Courses</a>
+          <%= link_to "Courses", courses_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Lenk</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
+        <% if not current_user.nil? %>
+          <% if current_user.instructor? %>
+            <li class="nav-item">
+              <%= link_to "Students", users_path, class: 'nav-link' %>
+            </li>
+          <% end %>
+        <% end %>
       </ul>
     </div>
 

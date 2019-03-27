@@ -1,0 +1,46 @@
+<%= form_for(@user, as: 'user', url: @user, method: 'post') do |f| %>
+  <%= render "devise/shared/error_messages", resource: @user %>
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username, autocomplete: "username" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, autocomplete: "first name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, autocomplete: "last name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :instituteid, "student ID" %><br />
+    <%= f.text_field :instituteid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :citizenid, "citizen ID" %><br />
+    <%= f.text_field :citizenid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <br>
+  <div class="actions">
+    <%= f.submit "Create User" %>
+  </div>
+<% end %>
+

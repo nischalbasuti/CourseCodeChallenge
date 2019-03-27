@@ -1,4 +1,4 @@
-class GroupPolicy <  ApplicationPolicy
+class UserPolicy <  ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -11,7 +11,7 @@ class GroupPolicy <  ApplicationPolicy
   end
 
   def show?
-    @user.instructor? or @user == @user_other
+    (@user.instructor? and @user_other.student?) or @user == @user_other
   end
 
   def create?
@@ -19,11 +19,11 @@ class GroupPolicy <  ApplicationPolicy
   end
 
   def update?
-    @user.instructor? or @user == @user_other
+    (@user.instructor? and @user_other.student?) or @user == @user_other
   end
 
   def destroy?
-    @user.instructor?
+    @user.instructor? and @user_other.student?
   end
 
   class Scope

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'home/index'
+
   resources :groups do 
     member do 
       get 'add_subscribers'
@@ -25,9 +26,11 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, controllers: {
+  devise_for :users, :path => 'u', controllers: {
             registrations: 'users/registrations'
   }
+
+  resources :users
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "home#index"
