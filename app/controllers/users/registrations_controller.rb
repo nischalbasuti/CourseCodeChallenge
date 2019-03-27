@@ -28,21 +28,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # Checking if instituteid parameter exists.
       if instituteid.blank?
         flash[:error] = "need to specify instructor id"
-        redirect_to "/users/sign_up"
+        redirect_to new_user_registration_path
         return
       end
 
       # Checking if department_id parameter exists.
       if department_id.blank?
         flash[:error] = "need to specify department"
-        redirect_to "/users/sign_up"
+        redirect_to new_user_registration_path
         return
       end
       # checking if department exists
       department = Department.find(department_id)
       if department.nil?
         flash[:error] = "Could not find department with id #{department_id}"
-        redirect_to "/users/sign_up"
+        redirect_to new_user_registration_path
         return
       end
 
@@ -62,7 +62,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # Checking if instituteid parameter exists.
       if instituteid.blank?
         flash[:error] = "need to specify student id"
-        redirect_to "/users/sign_up"
+        redirect_to new_user_registration_path
         return
       end
 
