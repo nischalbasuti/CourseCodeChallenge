@@ -1,22 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Course:</strong>
-  <%= link_to @group.course, @group.course %>
-</p>
+<h1>Course: <%= link_to @group.course, @group.course %></h1>
+<span>
+  <h2 style="display:inline"> Group: <%= @group.name %> </h2>
+  <% if @group.has_user? current_user %>
+    - <%= link_to 'Rename', edit_name_group_path(@group), class: 'btn btn-link' %>
+  <% end %>
+</span>
 
-<p>
-  <strong>Group ID:</strong>
-  <%= @group.id %>
-</p>
-
-<p>
-  <strong>Group name:</strong>
-  <%= @group.name %>
-<% if @group.has_user? current_user %>
-  - <%= link_to 'Rename', edit_name_group_path(@group) %>
+<% if @group.course.instructor? current_user %>
+  <p style='float:right'>
+  <%= link_to "Assign Project", edit_project_topic_group_path(@group), class: 'btn btn-primary' %>
+  <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-warning' %>
+  <%= link_to 'Destroy', @group, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  </p>
 <% end %>
-</p>
 
 <p>
   <strong>Grade:</strong>
@@ -25,7 +23,7 @@
   <% else %>
     <%= @group.grade %>
   <% end %>
-  <% if current_user.instructor? %>
+  <% if @group.course.instructor? current_user %>
     - <%= link_to "Change grade", edit_grade_group_path(@group) %>
   <% end %>
 </p>
@@ -35,10 +33,6 @@
   <%= @group.project_topic %>
 </p>
 
-<% if current_user.instructor? %>
-  <%= link_to "Assign Project", edit_project_topic_group_path(@group), class: 'btn btn-primary' %>
-  <%= link_to 'Edit', edit_group_path(@group) %> |
-<% end %>
 <%= link_to 'Back', groups_course_path(@group.course) %>
 
 <br>

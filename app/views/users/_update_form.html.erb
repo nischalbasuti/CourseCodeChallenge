@@ -1,33 +1,33 @@
 <%= form_for(@user, as: 'user', url: @user, method: 'put') do |f| %>
   <%= render "devise/shared/error_messages", resource: @user %>
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :username %><br />
-    <%= f.text_field :username, autocomplete: "username" %>
+    <%= f.text_field :username, autocomplete: "username", class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autocomplete: "first name" %>
+    <%= f.text_field :first_name, autocomplete: "first name", class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, autocomplete: "last name" %>
+    <%= f.text_field :last_name, autocomplete: "last name", class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :instituteid, "student ID/instructor ID" %><br />
-    <%= f.text_field :instituteid %>
+    <%= f.text_field :instituteid, class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :citizenid, "citizen ID" %><br />
-    <%= f.text_field :citizenid %>
+    <%= f.text_field :citizenid, class: 'form-control'  %>
   </div>
 
   <br>
   <div class="actions">
-    <%= f.submit "Update User" %>
+    <%= f.submit "Update User", class: 'btn btn-primary' %>
   </div>
 <% end %>
 

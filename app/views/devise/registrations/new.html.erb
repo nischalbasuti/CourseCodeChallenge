@@ -2,58 +2,58 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :username %><br />
-    <%= f.text_field :username, autocomplete: "username" %>
+    <%= f.text_field :username, autocomplete: "username", class: 'form-control', placeholder: 'Username', required: true %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autocomplete: "first name" %>
+    <%= f.text_field :first_name, autocomplete: "first name", class: 'form-control', placeholder: 'First Name', required: true %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, autocomplete: "last name" %>
+    <%= f.text_field :last_name, autocomplete: "last name", class: 'form-control', placeholder: 'Last Name', required: true %>
   </div>
 
-  <div class="field">
-    <%= f.label :role_id, "I am a:" %>
-    <%= f.collection_select :role_id, Role.all, :id, :name, :prompt => true %>
+  <div class="field form-group">
+    <%= f.label :role_id, "Role" %>
+    <%= f.collection_select :role_id, Role.all, :id, :name, {:prompt => true}, {:class => 'form-control', :required => true} %>
   </div>
 
-  <div class="field">
-    <%= label_tag :department, "Department" %>
-    <%= collection_select :instructor, :department_id, Department.all,
-                          :id, :name, :prompt => true %>
+  <div class="field form-group">
+    <%= label_tag :department, "Department (Only for Instructors)" %>
+    <%= collection_select :instructor, :department_id, Department.all, :id, :name, {:prompt => true}, {:class => 'form-control'} %>
   </div>
 
-  <div class="field">
-    <%= f.label :instituteid, "student ID/instructor ID" %><br />
-    <%= f.text_field :instituteid %>
+  <div class="field form-group">
+    <%= f.label :instituteid, "Student ID / Instructor ID" %><br />
+    <%= f.text_field :instituteid, class: 'form-control', placeholder: 'Student ID / Instructor ID' %>
   </div>
 
-  <div class="field">
-    <%= f.label :citizenid, "citizen ID" %><br />
-    <%= f.text_field :citizenid %>
+  <div class="field form-group">
+    <%= f.label :citizenid, "Citizen ID" %><br />
+    <%= f.text_field :citizenid, class: 'form-control', placeholder: 'Citizen ID', required: true %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', required: true %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', required: true %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Sign up", class: 'btn btn-primary' %>
   </div>
 <% end %>
 
+<br>
 <%= render "devise/shared/links" %>

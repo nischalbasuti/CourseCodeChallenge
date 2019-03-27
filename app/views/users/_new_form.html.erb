@@ -1,46 +1,46 @@
 <%= form_for(@user, as: 'user', url: @user, method: 'post') do |f| %>
   <%= render "devise/shared/error_messages", resource: @user %>
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :username %><br />
-    <%= f.text_field :username, autocomplete: "username" %>
+    <%= f.text_field :username, autocomplete: "username", class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autocomplete: "first name" %>
+    <%= f.text_field :first_name, autocomplete: "first name", class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, autocomplete: "last name" %>
+    <%= f.text_field :last_name, autocomplete: "last name", class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :instituteid, "student ID" %><br />
-    <%= f.text_field :instituteid %>
+    <%= f.text_field :instituteid, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :citizenid, "citizen ID" %><br />
-    <%= f.text_field :citizenid %>
+    <%= f.text_field :citizenid, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
   </div>
 
   <br>
   <div class="actions">
-    <%= f.submit "Create User" %>
+    <%= f.submit "Create User", class: 'btn btn-primary' %>
   </div>
 <% end %>
-
+<br>

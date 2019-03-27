@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Groups</h1>
+<h1>Course: <%= link_to @course.name, @course %> <%=  %></h1>
+<h2>Groups</h2>
 
-<strong>Course: <%= @course %></strong>
 
 <table class="table table-hover">
   <thead>
@@ -18,13 +18,10 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td><%= group.name %></td>
+        <td><%= link_to group.name, group %></td>
         <td><%= group.subscribers.includes(:user).where(users: {role: Role.first}).count %></td>
         <td><%= group.grade %></td>
         <td><%= link_to group.project_topic, group.project_url %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +29,4 @@
 
 <br>
 
-<%= link_to 'New Group', new_group_course_path(@course) %>
+<%= link_to 'New Group', new_group_course_path(@course), class: 'btn btn-primary' %>

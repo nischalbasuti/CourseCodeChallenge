@@ -1,33 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Course:</strong>
-  <%= link_to @course, @course %>
-</p>
+<h1>Course: <%= link_to @course.name, @course %></h1>
 
-<hr>
-<strong>Students:</strong>
+<h2> Subscribers: </h2>
 
-<%= form_tag(subscribers_course_path(@course), class: 'form', method: 'get') do %>
 
-  <span class="field">
+<style type="text/css" media="screen">
+  .form-group {
+    padding-left: 10px;
+  } 
+  label {
+    padding-right: 5px;
+  }
+</style>
+<%= form_tag(subscribers_course_path(@course), class: 'form form-inline', method: 'get') do %>
+
+  <span class="field form-group">
     <%= label_tag :name %>
-    <%= text_field_tag :name, params[:name] %>
+    <%= text_field_tag :name, params[:name], class: 'form-control', placeholder: 'name' %>
   </span>
 
-  <span class="field">
+  <span class="field form-group">
     <%= label_tag :student_id, "Student ID" %>
-    <%= text_field_tag :student_id, params[:student_id] %>
+    <%= text_field_tag :student_id, params[:student_id], class: 'form-control', placeholder: 'Student ID' %>
   </span>
 
-  <span class="field">
+  <span class="field form-group">
     <%= label_tag :group_id %>
-    <%# <%= text_field_tag :group %1> %>
-    <%= collection_select :course, :group_ids, @course.groups, :id, :name, :include_blank => 'Select Group', :selected => "" %>
+    <%= collection_select :course, :group_ids, @course.groups, :id, :name, {:include_blank => 'Select Group',  :selected => "" }, { :class => 'form-control' } %>
   </span>
 
   <span class="actions">
-    <%= submit_tag "filter" %>
+    <%= submit_tag "filter", class: 'form-control' %>
   </span>
   
 <% end %>

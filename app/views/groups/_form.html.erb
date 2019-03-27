@@ -11,32 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :course_id %>
-    <%= form.text_field :course_id %>
+    <%= form.text_field :course_id, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :grade %>
-    <%= form.text_field :grade %>
+    <%= form.text_field :grade, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :project_title %>
-    <%= form.text_field :project_title %>
+    <%= form.text_field :project_title, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :project_url %>
-    <%= form.text_field :project_url %>
+    <%= form.text_field :project_url, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Update Group', class: 'btn btn-primary' %>
   </div>
 <% end %>

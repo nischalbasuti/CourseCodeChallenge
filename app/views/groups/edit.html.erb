@@ -1,6 +1,4 @@
-<h1>Editing Group</h1>
-
+<h1>Course: <%= link_to @group.course.name, @group.course %></h1>
+<h2>Editing Group: <%= link_to @group.name, @group %></h2>
 <%= render 'form', group: @group %>
 
-<%= link_to 'Show', @group %> |
-<%= link_to 'Back', groups_path %>

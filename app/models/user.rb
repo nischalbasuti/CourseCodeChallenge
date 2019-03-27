@@ -86,4 +86,8 @@ class User < ApplicationRecord
       :institute_id => self.instituteid,
     }.to_s
   end
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
 end

@@ -1,4 +1,5 @@
-<h1>New Group</h1>
+<h1>Course: <%= link_to @course.name, @course %></h1>
+<h2>New Group</h2>
 
 <%= form_with(model: @group, local: true, url: create_group_course_path(@course)) do |form| %>
   <% if @group.errors.any? %>
@@ -13,21 +14,18 @@
     </div>
   <% end %>
 
-  course id: <%= @course.id %> <br>
-  course name: <%= @course %> <br>
-
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :project_topic %>
-    <%= form.text_field :project_topic %>
+    <%= form.text_field :project_topic, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Create New Group", class: 'btn btn-success' %>
   </div>
 <% end %>
 

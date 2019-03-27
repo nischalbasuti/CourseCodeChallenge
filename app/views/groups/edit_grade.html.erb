@@ -1,25 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Course:</strong>
-  <%= link_to @group.course, @group.course %>
-</p>
-
-<p>
-  <strong>Group name:</strong>
-  <%= link_to @group.name, group_url(@group) %>
-  
-</p>
-
-<p>
-  <strong>Group ID:</strong>
-  <%= @group.id %>
-</p>
-
-<p>
-  <strong>Project topic:</strong>
-  <%= @group.project_topic %>
-</p>
+<h1>Course: <%= link_to @group.course.name, @group.course %></h1>
+<h2> Group: <%= link_to @group.name, group_url(@group) %> </h2>
 
 <%= form_with(model: @group, url:update_grade_group_path(@group), method: 'put', local: true) do |form| %>
   <% if @group.errors.any? %>
@@ -34,12 +16,12 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :grade %>
-    <%= form.text_field :grade %>
+    <%= form.text_field :grade, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit "update grade" %>
+    <%= form.submit "Update grade", class: 'btn btn-primary' %>
   </div>
 <% end %>
