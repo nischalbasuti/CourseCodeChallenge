@@ -132,14 +132,14 @@ class CoursesController < ApplicationController
 
     if not params[:student_id].blank?
       student_id = params[:student_id].downcase
-      @filtered_subscribers = @filtered_subscribers
-        .where("LOWER(instituteid) like ?", "%#{student_id}%")
+      @filtered_subscribers = @filtered_subscribers.includes(:user)
+        .where("LOWER(users.instituteid) like ?", "%#{student_id}%").references(:users)
     end
 
     if not params[:course].nil?
       if not params[:course][:group_ids].blank?
         group_id = params[:course][:group_ids]
-        @filtered_subscribers = @filtered_subscribers .where(group_id: group_id)
+        @filtered_subscribers = @filtered_subscribers.where(group_id: group_id)
       end
     end
   end
