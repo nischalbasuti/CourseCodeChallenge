@@ -14,6 +14,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @group = @course.subscribers.where(user: current_user).take.group
   end
 
   # GET /courses/new
