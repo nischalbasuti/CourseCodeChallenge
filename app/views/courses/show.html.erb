@@ -31,13 +31,11 @@
 
 <hr>
 
-<% if @group.nil? %>
-  Group not assigned yet.
-<% else %>
-  <%= link_to "Your Group", @group, method: :get, class: 'btn btn btn-primary' %> <br><br>
-  <% if not @group.project_topic.blank? %>
-    <strong>Project Assigned:</strong>  <%= @group.project_topic %> <br>
-    <%= link_to "Upload Project", upload_project_group_url(@group) %>
+<% if  @course.subscribed? current_user %>
+  <% if @group.nil?  %>
+    Group not assigned yet.
+  <% else %>
+    <%= link_to "Your Group", @group, method: :get, class: 'btn btn btn-primary' %> <br><br>
   <% end %>
 <% end %>
 

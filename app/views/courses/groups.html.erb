@@ -21,7 +21,11 @@
         <td><%= link_to group.name, group %></td>
         <td><%= group.subscribers.includes(:user).where(users: {role: Role.first}).count %></td>
         <td><%= group.grade %></td>
-        <td><%= link_to group.project_topic, group.project_url %></td>
+        <td>
+          <% if group.project.attached? %>
+            <%= link_to group.project_topic, url_for(group.project) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

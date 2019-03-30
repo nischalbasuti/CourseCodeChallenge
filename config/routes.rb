@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       put 'update_project_topic'
       get 'edit_grade'
       put 'update_grade'
+      post 'project', to: "groups#upload_project"
+      delete 'project',  to: "groups#delete_project"
+      get 'project', to: 'groups#download_project'
     end
   end
 
