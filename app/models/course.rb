@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
   belongs_to :instructor
-  has_many :subscribers
-  has_many :groups
+  has_many :subscribers, :dependent => :destroy
+  has_many :groups, :dependent => :destroy
   has_many :users, through: :subscribers
 
   validate :check_dates

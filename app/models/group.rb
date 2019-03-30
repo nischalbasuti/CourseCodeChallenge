@@ -1,6 +1,6 @@
 class Group < ApplicationRecord
   belongs_to :course
-  has_many :subscribers
+  has_many :subscribers, :dependent => :nullify
 
   has_one_attached :project
 

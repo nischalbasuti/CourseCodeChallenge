@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :role
-  has_many :subscribers
+  has_many :subscribers, dependent: :destroy
   has_many :courses, through: :subscribers
 
   validate :validate_fields
