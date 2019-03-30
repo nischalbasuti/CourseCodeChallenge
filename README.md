@@ -1,30 +1,32 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+# Course Code Challenge
 
 ## Ruby version
+Developed on:
 ```ruby 2.6.1p33 (2019-01-30 revision 66950) [x86_64-linux]```
 
-## System dependencies
-nothing (yet).
+## Rails version
+Developed on:
+``` Rails 5.2.2.1 ```
 
 ## Configuration
+Modify ```db/seeds.rb``` to add available departments.
 
-## Database creation
+Example:
+```ruby
+...
+...
+
+Department.create([ {name: 'Computer Science'},
+                    {name: 'Liberal Arts'},
+                    {name: 'Any other department'}])
+```
+
+## Database creation and initialization
 ```bundle exec rake db:create```
 
-## Database initialization
-```bundle exec rake db:create```
-```bundle exec rake db:migrate```
-```bundle exec rake db:seed```
+```
+bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rake db:seed
+```
 
-## How to run the test suite
-
-## Services (job queues, cache servers, search engines, etc.)
-
-## Deployment instructions
-
-## ...
