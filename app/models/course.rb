@@ -31,6 +31,13 @@ class Course < ApplicationRecord
     self.name
   end
 
+  def in_training_period? now
+    if self.end_date.nil?
+      return true
+    end
+    now >= self.start_date and now <= self.end_date
+  end
+
   private
 
   def check_dates

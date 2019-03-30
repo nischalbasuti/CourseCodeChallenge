@@ -14,6 +14,11 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    if @course.subscribed? current_user
+      @group = @course.subscribers.where(user: current_user).take.group
+    else
+      @group = nil
+    end
   end
 
   # GET /courses/new

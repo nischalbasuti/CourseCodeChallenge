@@ -171,6 +171,40 @@ class GroupsController < ApplicationController
     end
   end
 
+  # POST /groups/:id/project
+  def upload_project
+    authorize @group, :show?
+
+    if not current_user.instructor?
+      if not @group.course.in_training_period? Time.now.to_date
+        flash[:alert] = "Can't upload file when not in training period."
+        redirect_to @group
+        return
+      end
+    end
+
+    @group.project.attach(params[:group][:project])
+    flash[:alert] = "Successfully uploaded project."
+    redirect_to @group
+  end
+
+  # GET /groups/:id/project
+  def download_project
+    authorize @group, :show?
+
+    flash[:alert] = "Successfully uploaded project."
+    redirect_to @group
+  end
+  
+  # DELETE /groups/:id/project
+  def delete_project
+    authorize @group, :show?
+
+    @group.project.purge
+    flash[:alert] = "Successfully deleted project."
+    redirect_to @group
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group
@@ -179,6 +213,6 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:course_id, :name, :grade, :project_url)
+      params.require(:group).permit(:course_id, :name, :grade, :project_url, :project)
     end
 end

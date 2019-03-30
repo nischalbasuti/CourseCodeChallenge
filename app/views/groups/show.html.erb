@@ -66,3 +66,35 @@
 <% if current_user.instructor? %>
   <%= link_to "Add Subscribers to Group.", add_subscribers_group_path(@group), class: 'btn btn-success' %>
 <% end %>
+
+<hr>
+
+<% if not @group.project_topic.blank? %>
+  <strong>Project Assigned:</strong>  <%= @group.project_topic %> <br>
+
+  <br>
+  <%= form_for @group, url: project_group_path(@group), method: 'post', :html => { :class => 'form' } do |f| %>
+    <div class="form-group>">
+      <% if @group.project.attached? %>
+        <label> Update project file: </label>
+      <% else %>
+        <label> Upload project file: </label>
+      <% end %>
+      <%= f.file_field :project, multiple: false, direct_upload: true, class: 'form-control-file' %>
+    </div>
+
+    <div class="action">
+      <% if @group.project.attached? %>
+        <%= f.submit "Update Project"%>
+      <% else %>
+        <%= f.submit "Upload Project"%>
+      <% end %>
+    </div>
+  <% end %>
+  <br>
+
+  <% if @group.project.attached? %>
+    <%= link_to "Download project file", url_for(@group.project), class: 'btn btn-primary' %>
+    <%= link_to "Delete project file", project_group_path(@group), class: 'btn btn-danger', method: 'delete' %>
+  <% end %>
+<% end %>

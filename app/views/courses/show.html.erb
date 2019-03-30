@@ -31,8 +31,12 @@
 
 <hr>
 
-<% if current_user.student? %>
-  <? group = @course.subscribers.where(user: current_user).first.group ?>
-  <%= link_to "Your Group", group_url, method: :get, class: 'btn btn btn-primary' %> <br>
+<% if  @course.subscribed? current_user %>
+  <% if @group.nil?  %>
+    Group not assigned yet.
+  <% else %>
+    <%= link_to "Your Group", @group, method: :get, class: 'btn btn btn-primary' %> <br><br>
+  <% end %>
 <% end %>
+
 
