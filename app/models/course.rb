@@ -4,6 +4,8 @@ class Course < ApplicationRecord
   has_many :groups
   has_many :users, through: :subscribers
 
+  validate :check_dates
+
   def subscribed?(user)
     self.users.where(id: user.id).count >= 1
   end
@@ -25,8 +27,15 @@ class Course < ApplicationRecord
     self.subscribers.where(user: user).destroy_all
   end
 
-
   def to_s
     self.name
+  end
+
+  private
+
+  def check_dates
+    if self.start_date > self.end_date
+      errors.add(:course, 'Start date can\'t be after end date.')
+    end
   end
 end
