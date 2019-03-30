@@ -14,6 +14,11 @@
   <strong>Instructor:</strong>
   <%= @course.instructor.user.username %>
 </p>
+<p>
+  <strong>Training period:</strong>
+  <%= @course.start_date %>
+  to <%= @course.end_date %>
+</p>
 
 <p>
 <% if @course.subscribed?(current_user) %>

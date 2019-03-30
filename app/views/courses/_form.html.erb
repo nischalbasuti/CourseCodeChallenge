@@ -1,4 +1,4 @@
-<%= form_with(model: course, local: true) do |form| %>
+<%= form_with(model: course, local: true, class: 'form-horizontal') do |form| %>
   <% if course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -11,9 +11,25 @@
     </div>
   <% end %>
 
-  <div class="field form-group">
+  <div class="field control-group">
     <%= form.label :name %>
     <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="field control-group">
+    <div class="control-group">
+      <div class="controls form-inline">
+        <%= form.label :start_date %>
+        <%= form.date_select :start_date, {}, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls form-inline">
+        <%= form.label :end_date %>
+        <%= form.date_select :end_date, {}, class: 'form-control' %>
+      </div>
+    </div>
   </div>
 
   <div class="actions">
