@@ -1,5 +1,56 @@
-<h1>Home - Nimble Code Challenge</h1>
-<p>Nischal Srinivas Basuti - nischalbasuti1@gmail.com </p>
-<ul>
-  <li><%= link_to "github repo", "https://www.github.com/nischalbasuti" %></li>
-</ul>
+<h1>Hi, <%= current_user.full_name %></h1>
+<hr>
+
+<h2>Courses You're Subscribed To.</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Instructor</th>
+      <th>Group</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% current_user.courses.each do |course| %>
+      <tr>
+        <td><%= link_to course.name, course %></td>
+        <td><%= course.instructor.user.full_name %></td>
+        <% group = course.group current_user %>
+        <% if group.nil? %>
+          <td> group not assigned yet.  </td>
+        <% else %>
+          <td><%= link_to group.name, group %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<% if current_user.instructor? %>
+<h2>Courses You're Teaching.</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% courses = Course.includes(:instructor).where("instructors.user_id = ?", current_user.id).references(:instructors) %>
+    <% courses.each do |course| %>
+      <tr>
+        <td><%= link_to course.name, course %></td>
+        <% group = course.group current_user %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+

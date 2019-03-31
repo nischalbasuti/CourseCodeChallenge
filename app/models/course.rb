@@ -27,6 +27,14 @@ class Course < ApplicationRecord
     self.subscribers.where(user: user).destroy_all
   end
 
+  def group(user)
+    if self.subscribed? user
+      return self.subscribers.where(user: user).take.group
+    else
+      return nil
+    end
+  end
+
   def to_s
     self.name
   end
