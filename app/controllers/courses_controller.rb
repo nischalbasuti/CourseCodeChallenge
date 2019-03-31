@@ -157,6 +157,6 @@ class CoursesController < ApplicationController
     end
  
     def group_params
-      params.require(:group).permit(:course_id, :name, :grade, :project_url)
+      params.require(:group).permit(:course_id, :name, :grade)
     end
 end
