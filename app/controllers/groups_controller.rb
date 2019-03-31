@@ -121,9 +121,10 @@ class GroupsController < ApplicationController
   # DELETE /groups/1.json
   def destroy
     authorize @group
+    tmp_course = @group.course
     @group.destroy
     respond_to do |format|
-      format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
+      format.html { redirect_to tmp_course, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
