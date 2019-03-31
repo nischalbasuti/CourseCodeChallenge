@@ -5,7 +5,7 @@
   <p style='float:right'>
   <%= link_to 'Edit', edit_course_path(@course), class: 'btn btn-warning' %> 
   <%= link_to 'Destroy', @course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-  <%= link_to "Groups", groups_course_path(@course), method: :get, class: 'btn btn btn-primary' %>
+  <%# <%= link_to "Groups", groups_course_path(@course), method: :get, class: 'btn btn btn-primary' %1> %>
   <%= link_to "Subscribers", subscribers_course_path(@course), method: :get, class: 'btn btn btn-primary' %> <br>
   </p>
 <% end %>
@@ -39,4 +39,39 @@
   <% end %>
 <% end %>
 
+<% if current_user.instructor? %>
+  <h2>Groups</h2>
+
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Number of Students</th>
+        <th>Grade</th>
+        <th>Project url</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @course.groups.each do |group| %>
+        <tr>
+          <td><%= link_to group.name, group %></td>
+          <td><%= group.subscribers.includes(:user).where(users: {role: Role.first}).count %></td>
+          <td><%= group.grade %></td>
+          <td>
+            <% if group.project.attached? %>
+              <%= link_to group.project_topic, url_for(group.project) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Group', new_group_course_path(@course), class: 'btn btn-primary' %>
+<% end %>
 
