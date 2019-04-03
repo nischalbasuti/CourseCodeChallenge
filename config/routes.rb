@@ -3,20 +3,24 @@ Rails.application.routes.draw do
 
   resources :groups do 
     member do 
-      get 'add_subscribers'
-      put 'add_subscriber'
-      delete 'remove_subscriber'
       put 'update_name'
       get 'edit_name'
+
       get 'edit_project_topic'
       put 'update_project_topic'
+
       get 'edit_grade'
       put 'update_grade'
-      post 'project', to: "groups#upload_project"
-      delete 'project',  to: "groups#delete_project"
-      get 'project', to: 'groups#download_project'
+
+      post 'project', to: "projects#upload_project"
+      delete 'project',  to: "projects#delete_project"
+
+      get 'add_subscribers', to: 'subscribers#add_subscribers'
+      put 'add_subscriber', to: 'subscribers#add_subscriber'
+      delete 'remove_subscriber', to: 'subscribers#remove_subscriber'
     end
   end
+
 
   resources :courses do
     member do
