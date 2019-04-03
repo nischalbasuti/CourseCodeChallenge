@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  include GroupAttributesConcern
+
   before_action :set_group, except: [:index, :create, :new]
   before_action :authenticate_user!, except: []
 
@@ -23,66 +25,6 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     authorize @group
-  end
-
-  # PUT /groups/1/update_name
-  def update_name
-    if @group.has_user? current_user
-      @group.name = params[:group][:name]
-
-      if @group.save
-        flash[:alert] = "Successfully updated name of group to #{params[:name]}."
-      else
-        flash[:error] = "Failed to update the name of the group."
-      end
-      redirect_to @group
-    else
-      flash[:error] = "You must be a member of the group to update it's name."
-      redirect_to @group
-    end
-  end
-
-  # GET /groups/1/edit_name
-  def edit_name
-  end
-
-  # GET /groups/1/edit_project_topic
-  def edit_project_topic
-    authorize @group, :create?
-  end
-
-  # PUT /groups/1/update_project_topic
-  def update_project_topic
-    authorize @group, :create?
-
-    @group.project_topic = params[:group][:project_topic]
-
-    if @group.save
-      flash[:alert] = "Successfully updated project topic."
-    else
-      flash[:error] = "Failed to update the project topic."
-    end
-    redirect_to @group
-  end
-
-  # GET /groups/1/edit_grade
-  def edit_grade
-  end
-
-  # PUT /groups/1/update_grade
-  def update_grade
-    # TODO before_action set_group not working, find out why.
-    @grade = Group.find(params[:id]) # Temporary fix for before_action problem.
-    authorize @grade, :create?
-
-    @group.grade = params[:group][:grade]
-
-    if @group.save
-      flash[:alert] = "Successfully updated grade."
-    else
-      flash[:error] = "Failed to update grade."
-    end
-    redirect_to @group
   end
 
   # POST /groups
@@ -127,83 +69,6 @@ class GroupsController < ApplicationController
       format.html { redirect_to tmp_course, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  # GET /groups/:id/add_subscriber
-  def add_subscribers
-    authorize @group, :edit?
-
-    @course = @group.course
-
-    # Subscribers of this course who are students and are not in this group.
-    @student_subscribers = @course.subscribers
-                          .where("group_id !=? or group_id is null", @group.id)
-  end
-
-  # PUT /groups/:id/add_subscriber
-  def add_subscriber
-    authorize @group, :create?
-
-    subscriber = Subscriber.find(params[:subscriber_id])
-    subscriber.group = @group
-
-    if subscriber.save
-      flash[:alert] = "Successfully added #{subscriber.user.username} to group!"
-      redirect_to add_subscribers_group_path(@group)
-    else
-      flash[:error] = "Failed to add to #{subscriber.user.username} group!"
-      redirect_to add_subscribers_group_path(@group)
-    end
-  end
-
-  # DELETE /groups/:id/remove_subscriber
-  def remove_subscriber
-    authorize @group, :create?
-
-    subscriber = Subscriber.find(params[:subscriber_id])
-    subscriber.group = nil
-
-    if subscriber.save
-      flash[:alert] = "Successfully removed #{subscriber.user.username} from group!"
-      redirect_to @group
-    else
-      flash[:error] = "Failed to remove #{subscriber.user.username} from group!"
-      redirect_to @group
-    end
-  end
-
-  # POST /groups/:id/project
-  def upload_project
-    authorize @group, :show?
-
-    if not current_user.instructor?
-      if not @group.course.in_training_period? Time.now.to_date
-        flash[:alert] = "Can't upload file when not in training period."
-        redirect_to @group
-        return
-      end
-    end
-
-    @group.project.attach(params[:group][:project])
-    flash[:alert] = "Successfully uploaded project."
-    redirect_to @group
-  end
-
-  # GET /groups/:id/project
-  def download_project
-    authorize @group, :show?
-
-    flash[:alert] = "Successfully uploaded project."
-    redirect_to @group
-  end
-  
-  # DELETE /groups/:id/project
-  def delete_project
-    authorize @group, :show?
-
-    @group.project.purge
-    flash[:alert] = "Successfully deleted project."
-    redirect_to @group
   end
 
   private
